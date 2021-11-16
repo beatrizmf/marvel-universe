@@ -17,6 +17,7 @@ export function Header() {
             <a>Favorites</a>
           </ActiveLink>
         </nav>
+
         <SignInButton />
       </div>
     </header>
