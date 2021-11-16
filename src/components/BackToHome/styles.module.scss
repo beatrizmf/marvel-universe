@@ -1,0 +1,12 @@
+.arrow {
+  margin: 2rem 0 0 2rem;
+  position: absolute;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 630px) {
+    position: relative;
+  }
+}

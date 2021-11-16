@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { Link as ScrollLink } from 'react-scroll'
@@ -9,7 +8,7 @@ import { api } from '../services/api'
 import styles from '../styles/home.module.scss'
 import { CharactersList } from '../components/CharactersList'
 
-const Home: NextPage = () => {
+export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [characters, setCharacters] = useState<Character[]>([])
   const [nameContains, setNameContains] = useState('')
@@ -79,12 +78,11 @@ const Home: NextPage = () => {
     )
   }
 
-  function SearchBar() {
+  function searchBar() {
     return (
       <>
         <div className={styles.searchBarInputArea}>
           <input
-            autoFocus
             value={nameContains}
             onChange={e => setNameContains(e.target.value || '')}
             type="text"
@@ -167,7 +165,7 @@ const Home: NextPage = () => {
         <Hero />
         <section id="characters" className={styles.charactersSection}>
           <h2>Marvel Characters List</h2>
-          <SearchBar />
+          {searchBar()}
 
           <CharactersList isLoading={isLoading} characters={characters} />
         </section>
@@ -175,5 +173,3 @@ const Home: NextPage = () => {
     </>
   )
 }
-
-export default Home
