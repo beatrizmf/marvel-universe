@@ -1,0 +1,18 @@
+.container {
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    div > div > div {
+      margin: 1rem;
+      width: 250px !important;
+      height: 470px !important;
+    }
+
+    @media (max-width: 900px) {
+      flex-direction: column;
+    }
+  }
+}

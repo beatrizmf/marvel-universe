@@ -1,0 +1,52 @@
+.charactersList {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
+.characterCard {
+  margin: 1rem;
+  max-width: 250px;
+  border-radius: 1rem;
+  color: var(--gray-900);
+  background: var(--white);
+
+  filter: brightness(0.92);
+  transition: filter 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+    transition: all 0.2s;
+  }
+
+  img {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    object-fit: cover;
+  }
+}
+
+.characterCardContent {
+  padding: 1rem;
+  min-height: 216px;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+      font-weight: bold;
+      color: var(--blue);
+    }
+  }
+}

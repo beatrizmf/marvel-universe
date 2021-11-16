@@ -131,6 +131,13 @@
   dependencies:
     glob "7.1.7"
 
+"@next/eslint-plugin-next@^12.0.4":
+  version "12.0.4"
+  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-12.0.4.tgz#f1751715634e200a868aa3fa42b4c3391254de81"
+  integrity sha512-3N+LG+wQQB0JLfMj4YKkefWnjcsFVBmixRWdzbVBnt/cxbVZ0izf+BR1MzvrPX1oaP0OrYk8X/9Mn9Yftuajvg==
+  dependencies:
+    glob "7.1.7"
+
 "@next/polyfill-module@12.0.3":
   version "12.0.3"
   resolved "https://registry.yarnpkg.com/@next/polyfill-module/-/polyfill-module-12.0.3.tgz#4217e5284762124bf9fe2505622c4de89998f7a2"
@@ -2562,6 +2569,11 @@ raw-body@2.4.1:
     http-errors "1.7.3"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+react-content-shimmer@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/react-content-shimmer/-/react-content-shimmer-2.2.6.tgz#4e251469bc4d39ef33ef8ea2e3b248192781ff1f"
+  integrity sha512-MBDLQL0vXXSuUKXRwyBKSi/745IrHqw/UkFGodNLw9dgl1cYHPMlJ/Gx2bGHpgpPz6oyIYphRhpcAdb1PKAyYw==
 
 react-dom@17.0.2:
   version "17.0.2"
