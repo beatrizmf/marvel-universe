@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link as ScrollLink } from 'react-scroll'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import Image from 'next/image'
@@ -14,7 +14,7 @@ interface HomeProps {
 }
 
 export default function Home({ initialCharacters }: HomeProps) {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [characters, setCharacters] = useState<Character[]>(initialCharacters)
   const [nameContains, setNameContains] = useState('')
   const [orderBy, setOrderBy] = useState('name')
@@ -42,13 +42,15 @@ export default function Home({ initialCharacters }: HomeProps) {
     })
   }
 
-  function toggleOrderSort() {
-    setOrderBySort(orderBySort === 'ascending' ? 'descending' : 'ascending')
+  function changeOrderBy(newOrderBy: string) {
+    setOrderBy(newOrderBy)
+    fetchCharacters()
   }
 
-  useEffect(() => {
+  function toggleOrderSort() {
+    setOrderBySort(orderBySort === 'ascending' ? 'descending' : 'ascending')
     fetchCharacters()
-  }, [orderBy, orderBySort])
+  }
 
   function Hero() {
     return (
@@ -110,7 +112,7 @@ export default function Home({ initialCharacters }: HomeProps) {
             <button
               type="button"
               disabled={orderBy === 'name'}
-              onClick={() => setOrderBy('name')}
+              onClick={() => changeOrderBy('name')}
               className={
                 orderBy === 'name'
                   ? styles.searchBarOrderBySelected
@@ -123,7 +125,7 @@ export default function Home({ initialCharacters }: HomeProps) {
             <button
               type="button"
               disabled={orderBy === 'modified'}
-              onClick={() => setOrderBy('modified')}
+              onClick={() => changeOrderBy('modified')}
               className={
                 orderBy === 'modified'
                   ? styles.searchBarOrderBySelected
@@ -182,11 +184,11 @@ export default function Home({ initialCharacters }: HomeProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const characters = await api
     .get('/characters', { params: { limit: 20 } })
-    .then(res => res.data.data.results[0])
+    .then(res => res.data.data.results)
     .catch(() => [])
 
   return {
-    props: { characters },
+    props: { initialCharacters: characters },
     revalidate: 3600000 * 24 // 1 day
   }
 }
