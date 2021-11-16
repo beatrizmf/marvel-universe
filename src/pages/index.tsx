@@ -7,16 +7,22 @@ import { Character } from '../types'
 import { api } from '../services/api'
 import styles from '../styles/home.module.scss'
 import { CharactersList } from '../components/CharactersList'
+import { GetStaticProps } from 'next'
 
-export default function Home() {
+interface HomeProps {
+  initialCharacters: Character[]
+}
+
+export default function Home({ initialCharacters }: HomeProps) {
   const [isLoading, setIsLoading] = useState(true)
-  const [characters, setCharacters] = useState<Character[]>([])
+  const [characters, setCharacters] = useState<Character[]>(initialCharacters)
   const [nameContains, setNameContains] = useState('')
   const [orderBy, setOrderBy] = useState('name')
   const [orderBySort, setOrderBySort] = useState('ascending')
 
   function getParams() {
     const params = {
+      limit: 20,
       orderBy: (orderBySort === 'descending' ? '-' : '') + orderBy
     }
 
@@ -172,4 +178,15 @@ export default function Home() {
       </div>
     </>
   )
+}
+export const getStaticProps: GetStaticProps = async () => {
+  const characters = await api
+    .get('/characters', { params: { limit: 20 } })
+    .then(res => res.data.data.results[0])
+    .catch(() => [])
+
+  return {
+    props: { characters },
+    revalidate: 3600000 * 24 // 1 day
+  }
 }
