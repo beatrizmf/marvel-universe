@@ -189,6 +189,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { initialCharacters: characters },
-    revalidate: 3600000 * 24 // 1 day
+    revalidate: 60 * 60 * 24 // 1 day
   }
 }
