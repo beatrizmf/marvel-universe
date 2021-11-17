@@ -4,12 +4,11 @@
 
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 
-  @media (max-width: 958px) {
+  @media (max-width: 600px) {
     padding: 2rem;
     flex-direction: column;
-    justify-content: center;
   }
 }
 
@@ -22,7 +21,7 @@
     border-radius: 1rem;
   }
 
-  @media (max-width: 958px) {
+  @media (max-width: 600px) {
     margin: 0;
     margin-bottom: 2rem;
   }
@@ -31,6 +30,7 @@
 .containerAside {
   display: flex;
   flex-direction: column;
+  max-width: 600px;
 
   p {
     font-size: 1.2rem;
@@ -52,6 +52,10 @@
 .infoCardsArea {
   display: flex;
   align-items: center;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
 }
 
 .infoCard {
