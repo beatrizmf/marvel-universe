@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link as ScrollLink } from 'react-scroll'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import Image from 'next/image'
@@ -7,15 +7,10 @@ import { Character } from '../types'
 import { api } from '../services/api'
 import styles from '../styles/home.module.scss'
 import { CharactersList } from '../components/CharactersList'
-import { GetStaticProps } from 'next'
 
-interface HomeProps {
-  initialCharacters: Character[]
-}
-
-export default function Home({ initialCharacters }: HomeProps) {
+export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
-  const [characters, setCharacters] = useState<Character[]>(initialCharacters)
+  const [characters, setCharacters] = useState<Character[]>([])
   const [nameContains, setNameContains] = useState('')
   const [orderBy, setOrderBy] = useState('name')
   const [orderBySort, setOrderBySort] = useState('ascending')
@@ -42,14 +37,11 @@ export default function Home({ initialCharacters }: HomeProps) {
     })
   }
 
-  function changeOrderBy(newOrderBy: string) {
-    setOrderBy(newOrderBy)
+  useEffect(() => {
     fetchCharacters()
-  }
-
+  }, [orderBy, orderBySort])
   function toggleOrderSort() {
     setOrderBySort(orderBySort === 'ascending' ? 'descending' : 'ascending')
-    fetchCharacters()
   }
 
   function Hero() {
@@ -112,7 +104,7 @@ export default function Home({ initialCharacters }: HomeProps) {
             <button
               type="button"
               disabled={orderBy === 'name'}
-              onClick={() => changeOrderBy('name')}
+              onClick={() => setOrderBy('name')}
               className={
                 orderBy === 'name'
                   ? styles.searchBarOrderBySelected
@@ -125,7 +117,7 @@ export default function Home({ initialCharacters }: HomeProps) {
             <button
               type="button"
               disabled={orderBy === 'modified'}
-              onClick={() => changeOrderBy('modified')}
+              onClick={() => setOrderBy('modified')}
               className={
                 orderBy === 'modified'
                   ? styles.searchBarOrderBySelected
@@ -180,15 +172,4 @@ export default function Home({ initialCharacters }: HomeProps) {
       </div>
     </>
   )
-}
-export const getStaticProps: GetStaticProps = async () => {
-  const characters = await api
-    .get('/characters', { params: { limit: 20 } })
-    .then(res => res.data.data.results)
-    .catch(() => [])
-
-  return {
-    props: { initialCharacters: characters },
-    revalidate: 60 * 60 * 24 // 1 day
-  }
 }
