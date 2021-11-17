@@ -91,6 +91,27 @@
   }
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+    margin-top: 1rem;
+  }
+}
+
+.paginationPasser {
+  color: var(--red);
+  cursor: pointer;
+  background: var(--white);
+  padding: 0.6rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 0.5rem;
+}
+
 .searchBarInputArea {
   display: flex;
   align-items: center;
@@ -138,8 +159,19 @@
   margin: 1rem 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   @media (max-width: 600px) {
+    display: block;
+  }
+}
+
+.searchBarToolsLeft {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    margin-top: 1rem;
     justify-content: center;
   }
 }

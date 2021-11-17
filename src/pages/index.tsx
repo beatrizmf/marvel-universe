@@ -7,6 +7,7 @@ import { Character } from '../types'
 import { api } from '../services/api'
 import styles from '../styles/home.module.scss'
 import { CharactersList } from '../components/CharactersList'
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
@@ -14,10 +15,15 @@ export default function Home() {
   const [nameContains, setNameContains] = useState('')
   const [orderBy, setOrderBy] = useState('name')
   const [orderBySort, setOrderBySort] = useState('ascending')
+  const [offset, setOffset] = useState(1540)
+  const [total, setTotal] = useState(0)
+
+  const queryLimit = 20
 
   function getParams() {
     const params = {
-      limit: 20,
+      offset,
+      limit: queryLimit,
       orderBy: (orderBySort === 'descending' ? '-' : '') + orderBy
     }
 
@@ -33,13 +39,16 @@ export default function Home() {
 
     api.get('/characters', { params: getParams() }).then(res => {
       setCharacters(res.data.data.results)
+      setOffset(res.data.data.offset)
+      setTotal(res.data.data.total)
       setIsLoading(false)
     })
   }
 
   useEffect(() => {
     fetchCharacters()
-  }, [orderBy, orderBySort])
+  }, [orderBy, orderBySort, offset])
+
   function toggleOrderSort() {
     setOrderBySort(orderBySort === 'ascending' ? 'descending' : 'ascending')
   }
@@ -78,6 +87,33 @@ export default function Home() {
     )
   }
 
+  function Pagination() {
+    const hasMore = offset + queryLimit < total
+
+    return (
+      <div className={styles.pagination}>
+        {offset >= queryLimit && (
+          <FiArrowLeft
+            onClick={() => setOffset(offset - queryLimit)}
+            className={styles.paginationPasser}
+            size="1rem"
+          />
+        )}
+        Showing {offset} out of {hasMore ? offset + queryLimit : total} of total{' '}
+        {total}
+        {hasMore && (
+          <FiArrowRight
+            onClick={() =>
+              setOffset(hasMore ? offset + queryLimit : total - queryLimit)
+            }
+            className={styles.paginationPasser}
+            size="1rem"
+          />
+        )}
+      </div>
+    )
+  }
+
   function searchBar() {
     return (
       <>
@@ -99,56 +135,60 @@ export default function Home() {
         </div>
 
         <div className={styles.searchBarTools}>
-          <div className={styles.searchBarOrderBy}>
-            <span>Order by: </span>
-            <button
-              type="button"
-              disabled={orderBy === 'name'}
-              onClick={() => setOrderBy('name')}
-              className={
-                orderBy === 'name'
-                  ? styles.searchBarOrderBySelected
-                  : styles.searchBarOrderByNotSelected
-              }
-            >
-              Name
-            </button>
+          <div className={styles.searchBarToolsLeft}>
+            <div className={styles.searchBarOrderBy}>
+              <span>Order by: </span>
+              <button
+                type="button"
+                disabled={orderBy === 'name'}
+                onClick={() => setOrderBy('name')}
+                className={
+                  orderBy === 'name'
+                    ? styles.searchBarOrderBySelected
+                    : styles.searchBarOrderByNotSelected
+                }
+              >
+                Name
+              </button>
 
-            <button
-              type="button"
-              disabled={orderBy === 'modified'}
-              onClick={() => setOrderBy('modified')}
-              className={
-                orderBy === 'modified'
-                  ? styles.searchBarOrderBySelected
-                  : styles.searchBarOrderByNotSelected
-              }
+              <button
+                type="button"
+                disabled={orderBy === 'modified'}
+                onClick={() => setOrderBy('modified')}
+                className={
+                  orderBy === 'modified'
+                    ? styles.searchBarOrderBySelected
+                    : styles.searchBarOrderByNotSelected
+                }
+              >
+                Modified
+              </button>
+            </div>
+
+            <div
+              onClick={toggleOrderSort}
+              className={styles.searchBarOrderBySort}
             >
-              Modified
-            </button>
+              <FaArrowUp
+                size={20}
+                className={
+                  orderBySort === 'ascending'
+                    ? styles.searchBarOrderBySortActive
+                    : ''
+                }
+              />
+              <FaArrowDown
+                size={20}
+                className={
+                  orderBySort === 'descending'
+                    ? styles.searchBarOrderBySortActive
+                    : ''
+                }
+              />
+            </div>
           </div>
 
-          <div
-            onClick={toggleOrderSort}
-            className={styles.searchBarOrderBySort}
-          >
-            <FaArrowUp
-              size={20}
-              className={
-                orderBySort === 'ascending'
-                  ? styles.searchBarOrderBySortActive
-                  : ''
-              }
-            />
-            <FaArrowDown
-              size={20}
-              className={
-                orderBySort === 'descending'
-                  ? styles.searchBarOrderBySortActive
-                  : ''
-              }
-            />
-          </div>
+          <Pagination />
         </div>
       </>
     )
