@@ -20,5 +20,4 @@ export interface Comic {
   title: string
   thumbnail: Thumbnail
   description: string
-  characterId: number
 }

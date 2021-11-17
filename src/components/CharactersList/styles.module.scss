@@ -33,6 +33,8 @@
   // favorite button
   div:first-child {
     right: 0;
+    position: absolute;
+    z-index: 8;
   }
 }
 

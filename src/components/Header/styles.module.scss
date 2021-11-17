@@ -9,10 +9,6 @@
 
 .headerTitle {
   font-weight: bold;
-
-  @media (max-width: 600px) {
-    display: none;
-  }
 }
 
 .headerContent {

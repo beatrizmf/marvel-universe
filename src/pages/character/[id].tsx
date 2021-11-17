@@ -6,7 +6,8 @@ import { MdMenuBook, MdMovie } from 'react-icons/md'
 import Image from 'next/image'
 import styles from './styles.module.scss'
 import { BackToHome } from '../../components/BackToHome'
-
+import { useFavorite } from '../../hooks/useFavorite'
+import { FavoriteButton } from '../../components/FavoriteButton'
 interface CharacterProps {
   character: Character
   lastComics: Comic[]
@@ -16,8 +17,9 @@ export default function CharacterPage({
   character,
   lastComics
 }: CharacterProps) {
-  const { name, description, thumbnail, comics, series } = character
+  const { id, name, description, thumbnail, comics, series } = character
 
+  const { toggleFavoriteCharacter, isCharacterFavorite } = useFavorite()
   return (
     <>
       <Head>
@@ -28,18 +30,24 @@ export default function CharacterPage({
       <BackToHome />
 
       <div className={styles.mainContainer}>
-        <Image
-          width="216"
-          height="324"
-          src={`${thumbnail.path}/portrait_incredible.${thumbnail.extension}`}
-          alt={name}
-        />
+        <div className={styles.mainCoverContainer}>
+          <Image
+            width="216"
+            height="324"
+            src={`${thumbnail.path}/portrait_incredible.${thumbnail.extension}`}
+            alt={name}
+          />
+        </div>
 
         <div className={styles.containerAside}>
-          <div>
+          <div className={styles.titleArea}>
             <h2>{name}</h2>
-            <p>{description}</p>
+            <FavoriteButton
+              isFavorite={isCharacterFavorite(id)}
+              onClick={() => toggleFavoriteCharacter(character)}
+            />
           </div>
+          <p>{description}</p>
 
           <div className={styles.infoCardsArea}>
             <div className={styles.infoCard}>
@@ -65,15 +73,17 @@ export default function CharacterPage({
 
           <div className={styles.lastComics}>
             {lastComics.map(comic => (
-              <div className={styles.comic} key={comic.id}>
-                <Image
-                  className={styles.comicCover}
-                  width="216"
-                  height="324"
-                  src={`${comic.thumbnail.path}/portrait_incredible.${comic.thumbnail.extension}`}
-                  alt={comic.title}
-                />
-                <h4>{comic.title}</h4>
+              <div className={styles.comicConteiner} key={comic.id}>
+                <div className={styles.comic}>
+                  <Image
+                    className={styles.comicCover}
+                    width="216"
+                    height="324"
+                    src={`${comic.thumbnail.path}/portrait_incredible.${comic.thumbnail.extension}`}
+                    alt={comic.title}
+                  />
+                  <h4>{comic.title}</h4>
+                </div>
               </div>
             ))}
           </div>
@@ -116,6 +126,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: { character, lastComics },
-    revalidate: 3600000 * 24 // 1 day
+    revalidate: 60 * 60 * 24 // 1 day
   }
 }

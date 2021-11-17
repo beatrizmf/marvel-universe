@@ -6,70 +6,47 @@
   align-items: center;
   justify-content: space-evenly;
 
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+  @media (max-width: 958px) {
+    padding: 2rem;
+    flex-direction: column;
+    justify-content: center;
   }
+}
 
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
+.mainCoverContainer {
+  min-width: 216px;
+  min-height: 324px;
+  margin: 0 6rem;
 
   img {
     border-radius: 1rem;
   }
 
   @media (max-width: 958px) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
-.lastComicsContainer {
-  margin: 0 auto;
-  padding: 4rem 2rem;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-
-  h2 {
-    font-size: 2rem;
+    margin: 0;
     margin-bottom: 2rem;
   }
-}
-
-.lastComics {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 1rem;
-
-  h4 {
-    margin-top: 1rem;
-  }
-}
-
-.comic {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  max-width: 216px;
-  min-height: 440px;
-  margin: 1rem;
-}
-
-.comicCover {
-  border: 1px solid var(--white) !important;
 }
 
 .containerAside {
   display: flex;
   flex-direction: column;
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.titleArea {
+  display: flex;
   align-items: center;
-  max-width: 440px;
+  margin-bottom: 1rem;
+
+  h2 {
+    font-size: 2rem;
+    margin-right: 1rem;
+  }
 }
 
 .infoCardsArea {
@@ -112,4 +89,46 @@
       font-size: 1.2rem;
     }
   }
+}
+
+.lastComicsContainer {
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.lastComics {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 1rem;
+
+  h4 {
+    margin-top: 1rem;
+  }
+}
+
+.comicConteiner {
+  max-width: 216px;
+  min-height: 440px;
+  margin: 1rem;
+}
+
+.comic {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.comicCover {
+  border: 1px solid var(--white) !important;
 }

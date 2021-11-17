@@ -1,7 +1,8 @@
 .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  position: absolute;
-  z-index: 8;
   background: var(--white);
   padding: 0.6rem;
   border-radius: 50%;

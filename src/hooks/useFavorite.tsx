@@ -1,14 +1,11 @@
 import { createContext, useState, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { Character, Comic } from '../types'
+import { Character } from '../types'
 
 interface FavoriteContext {
   getFavoriteCharacters(): Character[]
   toggleFavoriteCharacter(character: Character): void
-  // toggleFavoriteComic(comic: Comic): void
-
   isCharacterFavorite(characterId: number): boolean
-  // isComicFavorite(comicId): boolean
 }
 
 const FavoriteContext = createContext<FavoriteContext>({} as FavoriteContext)
@@ -27,9 +24,6 @@ export const FavoriteProvider: React.FC = ({ children }) => {
 
     setFavoritesCharacters(storageFavoritesCharacters)
   }, [])
-
-  // function toggleFavoriteComic(comic: Comic) {
-  // }
 
   function isCharacterFavorite(characterId: number) {
     return (
@@ -81,18 +75,11 @@ export const FavoriteProvider: React.FC = ({ children }) => {
   function getFavoriteCharacters() {
     return favoritesCharacters
   }
-
-  // function isComicFavorite(comic: Comic) {
-  //   return favoritesComics.findIndex(item => item.id === comic.id) !== -1
-  // }
-
   return (
     <FavoriteContext.Provider
       value={{
         getFavoriteCharacters,
         toggleFavoriteCharacter,
-        // toggleFavoriteComic,
-        // isComicFavorite,
         isCharacterFavorite
       }}
     >
