@@ -15,7 +15,7 @@ export default function Home() {
   const [nameContains, setNameContains] = useState('')
   const [orderBy, setOrderBy] = useState('name')
   const [orderBySort, setOrderBySort] = useState('ascending')
-  const [offset, setOffset] = useState(1540)
+  const [offset, setOffset] = useState(0)
   const [total, setTotal] = useState(0)
 
   const queryLimit = 20
