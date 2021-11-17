@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 import { CharactersListLoader } from './CharactersListLoader'
 import styles from './styles.module.scss'
 import { EmptyScreen } from '../EmptyScreen'
-
+import { FavoriteButton } from '../FavoriteButton'
+import { useFavorite } from '../../hooks/useFavorite'
 interface CharactersListProps {
   isLoading: boolean
   characters: Character[]
@@ -25,13 +26,29 @@ export function CharactersList({ isLoading, characters }: CharactersListProps) {
     router.push(`/character/${id}`)
   }
 
+  const { toggleFavoriteCharacter, isCharacterFavorite } = useFavorite()
+
   const descriptionMaxLength = 85
 
   return (
     <div className={styles.charactersList}>
-      {characters.map(({ id, name, thumbnail, description }) => (
-        <div key={id} className={styles.characterCard}>
-          <div onClick={() => handleCharacterClick(id)}>
+      {characters.map(
+        ({ id, name, thumbnail, description, comics, series }) => (
+          <div key={id} className={styles.characterCard}>
+            <FavoriteButton
+              isFavorite={isCharacterFavorite(id)}
+              onClick={() =>
+                toggleFavoriteCharacter({
+                  id,
+                  name,
+                  thumbnail,
+                  description,
+                  comics,
+                  series
+                })
+              }
+            />
+
             <Image
               width="250"
               height="250"
@@ -48,11 +65,12 @@ export function CharactersList({ isLoading, characters }: CharactersListProps) {
                     : description}
                 </p>
               )}
-              <p>See more</p>
+
+              <p onClick={() => handleCharacterClick(id)}>See more</p>
             </div>
           </div>
-        </div>
-      ))}
+        )
+      )}
     </div>
   )
 }

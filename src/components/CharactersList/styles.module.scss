@@ -10,7 +10,6 @@
 }
 
 .characterCard {
-  cursor: pointer;
   margin: 1rem;
   max-width: 250px;
   border-radius: 1rem;
@@ -30,6 +29,11 @@
     border-top-right-radius: 1rem;
     object-fit: cover;
   }
+
+  // favorite button
+  div:first-child {
+    right: 0;
+  }
 }
 
 .characterCardContent {
@@ -45,6 +49,7 @@
     margin-bottom: 1rem;
 
     &:last-child {
+      cursor: pointer;
       margin-bottom: 0;
       font-weight: bold;
       color: var(--blue);
